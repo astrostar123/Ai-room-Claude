@@ -1,4 +1,4 @@
-// AI Room — the page.
+// AI Room - the page.
 // Listens to the server for live state, draws every room, and handles clicks:
 // open a conversation, reply, stop, Allow/Deny, settings.
 
@@ -764,7 +764,7 @@
     try {
       const r = await api(`/api/session/${selectedId}/reply`, { text });
       $('#p-reply').value = '';
-      toast('Sent — the robot is on it.');
+      toast('Sent - the robot is on it.');
       if (r.sessionId && r.sessionId !== selectedId) setTimeout(() => openPanel(r.sessionId), 300);
     } catch (err) {
       toast(err.message, true);
@@ -880,7 +880,7 @@
       <h3>Settings</h3>
       <h4>Hooks</h4>
       <div class="status-line s-${hooks.installed ? 'working' : 'waiting'}"><span class="dot"></span>
-        ${hooks.installed ? 'Connected. Claude sessions report to the Room.' : hooks.partial ? 'Partly connected — reconnect to fix.' : 'Not connected.'}</div>
+        ${hooks.installed ? 'Connected. Claude sessions report to the Room.' : hooks.partial ? 'Partly connected - reconnect to fix.' : 'Not connected.'}</div>
       <p class="note">Hooks live in <code>~/.claude/settings.json</code>. They do nothing when the Room isn't running.</p>
       <div class="modal-actions" style="justify-content:flex-start;margin-top:0">
         ${hooks.installed ? '<button class="btn small ghost" id="s-unhook">Disconnect hooks</button>' : '<button class="btn small warn" id="s-hook">Connect hooks</button>'}
@@ -895,7 +895,7 @@
       <h4>Room</h4>
       <label class="field"><span>Room style</span>
         <select id="s-style">
-          ${[['mixed', 'Mixed — every room gets its own style'], ...window.RoomThemes.ORDER.map((k) => [k, window.RoomThemes.labels[k]])]
+          ${[['mixed', 'Mixed - every room gets its own style'], ...window.RoomThemes.ORDER.map((k) => [k, window.RoomThemes.labels[k]])]
             .map(([v, l]) => `<option value="${v}"${st.roomStyle === v ? ' selected' : ''}>${l}</option>`).join('')}
         </select></label>
       <p class="note" style="margin-top:-6px">Each room's <b>Style</b> button changes just that room. Saving a new style here resets those.</p>
@@ -1207,20 +1207,20 @@
         a1: bot('a1', 'BOLT', 25, 'game', 'Add a boss fight', 'working', 'Editing Boss.js', {
           helpers: { active: 2, total: 3 }, connections: ['GitHub', 'Browser'], filesChanged: 6,
         }),
-        a2: bot('a2', 'PIXEL', 190, 'game', 'Fix the double-jump bug', 'waiting', 'Finished — your turn'),
+        a2: bot('a2', 'PIXEL', 190, 'game', 'Fix the double-jump bug', 'waiting', 'Finished - your turn'),
         a3: bot('a3', 'COG', 130, 'game', 'Set up the game engine', 'blocked', 'Wants to run: npm install phaser', {
           reason: 'permission', where: 'Terminal',
           permission: { id: 'd1', toolName: 'Bash', pretty: 'Bash', verb: 'run', target: '', preview: 'npm install phaser@3 --save',
             kind: 'cmd', note: 'Install the Phaser game engine', answerable: true, source: 'hook', expiresAt: now + 110e3, reason: '', more: 0 },
         }),
         b1: bot('b1', 'NOVA', 280, 'site', 'Make the site work on phones', 'working', 'Running npm run build', { where: 'Terminal' }),
-        b2: bot('b2', 'BYTE', 50, 'site', 'Write the About page', 'idle', 'Idle — session open', { lastActivity: now - 25 * 60e3 }),
+        b2: bot('b2', 'BYTE', 50, 'site', 'Write the About page', 'idle', 'Idle - session open', { lastActivity: now - 25 * 60e3 }),
         b3: bot('b3', 'ZIP', 330, 'site', 'Deploy to GitHub Pages', 'idle', 'Closed', { alive: false, lastActivity: now - 3 * 3600e3, canReply: true }),
       },
     };
     // &crowd fills the first room with 8 robots (two rows of desks)
     if (PARAMS.has('crowd')) {
-      const extra = [['LINT', 60, 'working', 'Running npm test'], ['SPARK', 300, 'idle', 'Idle — session open'], ['TURBO', 160, 'working', 'Reading Player.js'], ['ECHO', 220, 'waiting', 'Finished — your turn'], ['DOT', 100, 'idle', 'Closed']];
+      const extra = [['LINT', 60, 'working', 'Running npm test'], ['SPARK', 300, 'idle', 'Idle - session open'], ['TURBO', 160, 'working', 'Reading Player.js'], ['ECHO', 220, 'waiting', 'Finished - your turn'], ['DOT', 100, 'idle', 'Closed']];
       demo.rooms0 = ['a1', 'a2', 'a3'];
       extra.forEach(([name, hue, st, detail], k) => {
         const id = 'c' + k;
@@ -1263,7 +1263,7 @@
     if (path.startsWith('/api/permission/')) {
       // Allowed/denied: COG walks back to its desk, works, then finishes
       Object.assign(s.a3, { state: 'working', reason: null, permission: null, detail: body.decision === 'allow' ? 'Running npm install phaser@3 --save' : 'Thinking…' });
-      setTimeout(() => { Object.assign(s.a3, { state: 'waiting', detail: 'Finished — your turn', canStop: false }); demoPublish(); }, 6000);
+      setTimeout(() => { Object.assign(s.a3, { state: 'waiting', detail: 'Finished - your turn', canStop: false }); demoPublish(); }, 6000);
       setTimeout(demoPublish, 50);
       return Promise.resolve({ ok: true });
     }
@@ -1297,7 +1297,7 @@
       });
     }
     if (m && m[2] === 'seen') {
-      if (s[m[1]] && s[m[1]].state === 'waiting') Object.assign(s[m[1]], { state: 'idle', detail: 'Idle — session open' });
+      if (s[m[1]] && s[m[1]].state === 'waiting') Object.assign(s[m[1]], { state: 'idle', detail: 'Idle - session open' });
       setTimeout(demoPublish, 50);
       return Promise.resolve({ ok: true });
     }
@@ -1310,7 +1310,7 @@
       ] });
     }
     if (path === '/api/presence') return Promise.resolve({ ok: true });
-    return Promise.reject(new Error('This is the demo office — start AI Room normally to use this button.'));
+    return Promise.reject(new Error('This is the demo office - start AI Room normally to use this button.'));
   }
 
   if (DEMO) startDemo();

@@ -1,4 +1,4 @@
-// AI Room — the local server (Windows and Mac).
+// AI Room - the local server (Windows and Mac).
 //
 //   node server.js                       start the Room (in this console)
 //   node server.js --open                ...and open the Room window
@@ -429,7 +429,7 @@ async function handle(req, res) {
 
   if (req.method === 'GET' && !p.startsWith('/api/') && p !== '/hook') return serveStatic(res, p);
 
-  if (!tokenOk(req, url)) return sendJson(res, { error: 'Bad token — reload the Room window.' }, 401);
+  if (!tokenOk(req, url)) return sendJson(res, { error: 'Bad token - reload the Room window.' }, 401);
 
   // ---- Claude Code -> Room ----
   if (req.method === 'POST' && p === '/hook') return onHook(await readBody(req), req, res);
